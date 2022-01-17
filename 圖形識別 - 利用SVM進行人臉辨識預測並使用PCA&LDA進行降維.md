@@ -1,6 +1,6 @@
 圖形識別 - 利用SVM進行人臉辨識預測並使用PCA&LDA進行降維
 ===
-github:
+Hackmd:https://hackmd.io/9X_MuHSERz-_sfctp7ThJw
 ## 一、資料來源
 人臉數據庫:https://mitlab.ndhu.edu.tw/~ccchiang/PR/att_faces.zip
 
