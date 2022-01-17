@@ -1,5 +1,5 @@
 # Hackmd:https://hackmd.io/9X_MuHSERz-_sfctp7ThJw
-# github:
+# github:https://github.com/Hank860809/Base-on-SVM-on-Face-Recognize-with-PCA-LDA-Dimension-Reduction
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -22,7 +22,7 @@ def show_img(figure_num, n,img_set):
 train_data = []
 test_data = []
 train_true = [] # 真實訓練資料標籤
-test_true = []  # 真實訓練資料標籤
+test_true = []  # 真實測試資料標籤
 train_img = []  # 訓練集
 test_img = []   # 測試集
 
@@ -66,8 +66,8 @@ lda_clf = GridSearchCV(SVC(kernel='linear', class_weight='balanced'),param_grid)
 
 # PCA 10,20,30,40,50維訓練
 for i in range(10,51,10):
-    print()
-    print('第{}維:'.format(i))
+    print("\n================================================================", end="\n\n")
+    print('第{}維:'.format(i),end="\n\n")
     myPCA = PCA(n_components=i).fit(train_img)
     pca_train_img = myPCA.transform(train_img)
     pca_test_img = myPCA.transform(test_img)
@@ -92,10 +92,10 @@ for i in range(10,51,10):
     # 錯誤預測個數
     false_count = 200 - true_count
     # 統計資料
-    print('PCA正確預測個數:{}  錯誤預測個數:{} 準確率:{}'.format(true_count,false_count,pca_accuracy))
+    print('PCA正確預測個數:{}  錯誤預測個數:{} 準確率:{}'.format(true_count,false_count,pca_accuracy),end="\n\n")
     # 列印混合矩陣
     print('PCA混淆矩陣:')
-    print(pca_result)
+    print(pca_result,end="\n\n")
     print('PCA報告:')
     print(pca_report)
     # 將降為後的資料進行的逆轉換成原本資料
@@ -104,9 +104,10 @@ for i in range(10,51,10):
 
     # 因為LDA模型在SKlearn 維度只接受到0~min(n_features, n_classes-1)之間的維度，因為我們只有40個類別，因此最大維度只能到39
     if(i<40):
-        myLDA = LDA(n_components=i).fit(train_img, train_true)
-        lda_train_img = myLDA.transform(train_img)
-        lda_test_img = myLDA.transform(test_img)
+        print("\n------------------------------------------------------------")
+        myLDA = LDA(n_components=i).fit(pca_train_img, train_true)
+        lda_train_img = myLDA.transform(pca_train_img)
+        lda_test_img = myLDA.transform(pca_test_img)
 
         lda_pred = lda_clf.fit(lda_train_img, train_true)
         lda_test_pred = lda_pred.predict(lda_test_img)
@@ -122,9 +123,10 @@ for i in range(10,51,10):
         # 錯誤預測個數
         false_count = 200 - true_count
         # 統計資料
-        print('LDA正確預測個數:{}  錯誤預測個數:{} 準確率:{}'.format(true_count, false_count, lda_accuracy))
+        print('LDA正確預測個數:{}  錯誤預測個數:{} 準確率:{}'.format(true_count, false_count, lda_accuracy),end="\n\n")
         # 列印混合矩陣
         print('LDA混淆矩陣:')
-        print(lda_result)
+        print(lda_result,end="\n\n")
         print('LDA報告:')
         print(lda_report)
+
